@@ -1,0 +1,116 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.std_logic_unsigned.all;
+entity CarParkingSystem is
+port 
+(
+	clk					: in  std_logic;
+	reset				: in  std_logic;
+	entrance_sensor		: in  std_logic;
+	password_in			: in  std_logic_vector(7 downto 0);
+	emergency			: in  std_logic;
+	IDcard				: in  std_logic;
+	entrance_LED		: out std_logic;
+	password_LED		: out std_logic;
+	IDcard_LED			: out std_logic;
+	gate_LED			: out std_logic;
+	alarm				: out std_logic;
+);
+end CarParkingSystem;
+
+
+architecture Behavioral of CarParkingSystem is
+	constant PASSWORD : std_logic_vector(7 downto 0) := "00110101";
+	type state_type is (IDLE,ENTER_PASSWORD,CHECK_PASSWORD,PASSWORD_ACCEPTED,PASSWORD_REJECTED,SCAN_IDCARD,IDCARD_ACCEPTED,IDCARD_REJECTED,OPEN_GATE,ALERT);
+	signal current_state, next_state : state_type;
+	signal count : integer range 0 to 2 := 0;
+	
+	
+begin
+    -- Define the state machine process
+	state_machine : process(clk, reset)
+	begin
+		if reset = 1 then
+			current_state <= IDLE;
+			count <= 0;
+		elsif rising_edge(clk) then
+			current_state <= next_state;
+		end if;
+	end process state_machine;
+    
+    -- Define the next state logic
+    next_state_logic : process(current_state, front_sensor, password_in, IDcard, back_sensor)
+    begin
+        case current_state is
+			
+			when IDLE =>
+				if entrance_sensor = 1 then
+					next_state <= ENTER_PASSWORD;
+				else
+					next_state <= IDLE;
+				end if;
+			
+			when ENTER_PASSWORD =>
+				next_state <= CHECK_PASSWORD;
+			
+			when CHECK_PASSWORD =>
+				if password_in = password then
+					next_state <= PASSWORD_ACCEPTED;
+				else
+					next_state <= PASSWORD_REJECTED;
+				end if;
+			
+			when PASSWORD_ACCEPTED
+				next_state <= SCAN_IDCARD;
+				count <= 0;
+				
+			when PASSWORD_REJECTED
+				if count = 2 then
+					next_state <= ALERT;
+					count <= 0;
+				else
+					next_state <= ENTER_PASSWORD;
+					count <= count + 1;
+				end if;
+			
+			when SCAN_IDCARD
+				if IDcard = 1 then
+					next_state <= IDCARD_ACCEPTED;
+				else
+					next_state <= IDCARD_REJECTED;
+				end if;
+				
+			when IDCARD_ACCEPTED
+				next_state <= OPEN_GATE;
+			
+			when IDCARD_REJECTED
+				next_state <= ALERT;
+				
+			when OPEN_GATE
+				if entrance_sensor = 1 then
+					next_state <= OPEN_GATE;
+				else
+					next_state <= IDLE;
+				end if;
+			
+			when ALERT
+				if entrance_sensor = 0 then
+					next_state = IDLE;
+				else
+					next_state = ALERT;
+					
+				end if;
+			
+			when others => next_state <= IDLE;
+			
+		end case;
+    end process next_state_logic;
+    
+    -- Define the output logic
+    entrance_LED <= 1 when entrance_sensor = 1 else 0;
+	password_LED <= 1 when current_state = PASSWORD_ACCEPTED or SCAN_IDCARD or IDCARD_ACCEPTED or IDCARD_REJECTED or OPEN_GATE else 0;
+	IDcard_LED <= 1 when current_state = IDCARD_ACCEPTED or OPEN_GATE;
+	gate_LED <= 1 when current_state = OPEN_GATE;
+	alarm <= 1 when current_state = ALARM;
+	
+end architecture Behavioral;
