@@ -1,0 +1,85 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "entrance_LED",
+					"strict" : false
+				},
+				{
+					"name" : "password_LED",
+					"strict" : false
+				},
+				{
+					"name" : "IDcard_LED",
+					"strict" : false
+				},
+				{
+					"name" : "gate_LED",
+					"strict" : false
+				},
+				{
+					"name" : "alarm",
+					"strict" : false
+				},
+				{
+					"name" : "count_out[0]",
+					"strict" : false
+				},
+				{
+					"name" : "count_out[1]",
+					"strict" : false
+				},
+				{
+					"name" : "entrance_sensor",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "reset",
+					"strict" : false
+				},
+				{
+					"name" : "password_in[0]",
+					"strict" : false
+				},
+				{
+					"name" : "password_in[2]",
+					"strict" : false
+				},
+				{
+					"name" : "password_in[1]",
+					"strict" : false
+				},
+				{
+					"name" : "password_in[3]",
+					"strict" : false
+				},
+				{
+					"name" : "password_in[4]",
+					"strict" : false
+				},
+				{
+					"name" : "password_in[5]",
+					"strict" : false
+				},
+				{
+					"name" : "password_in[6]",
+					"strict" : false
+				},
+				{
+					"name" : "password_in[7]",
+					"strict" : false
+				},
+				{
+					"name" : "IDcard",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

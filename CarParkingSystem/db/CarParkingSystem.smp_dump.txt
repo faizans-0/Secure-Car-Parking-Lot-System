@@ -1,0 +1,13 @@
+
+State Machine - |CarParkingSystem|current_state
+Name current_state.ALERT current_state.OPEN_GATE current_state.IDCARD_REJECTED current_state.IDCARD_ACCEPTED current_state.SCAN_IDCARD current_state.PASSWORD_REJECTED current_state.PASSWORD_ACCEPTED current_state.CHECK_PASSWORD current_state.ENTER_PASSWORD current_state.IDLE 
+current_state.IDLE 0 0 0 0 0 0 0 0 0 0 
+current_state.ENTER_PASSWORD 0 0 0 0 0 0 0 0 1 1 
+current_state.CHECK_PASSWORD 0 0 0 0 0 0 0 1 0 1 
+current_state.PASSWORD_ACCEPTED 0 0 0 0 0 0 1 0 0 1 
+current_state.PASSWORD_REJECTED 0 0 0 0 0 1 0 0 0 1 
+current_state.SCAN_IDCARD 0 0 0 0 1 0 0 0 0 1 
+current_state.IDCARD_ACCEPTED 0 0 0 1 0 0 0 0 0 1 
+current_state.IDCARD_REJECTED 0 0 1 0 0 0 0 0 0 1 
+current_state.OPEN_GATE 0 1 0 0 0 0 0 0 0 1 
+current_state.ALERT 1 0 0 0 0 0 0 0 0 1 

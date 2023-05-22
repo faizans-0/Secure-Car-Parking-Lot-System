@@ -1,0 +1,34 @@
+|CarParkingSystem
+clk => alarm_temp.CLK
+clk => gate_LED_temp.CLK
+clk => IDcard_LED_temp.CLK
+clk => password_LED_temp.CLK
+clk => entrance_LED_temp.CLK
+clk => count[0].CLK
+clk => count[1].CLK
+clk => current_state~1.DATAIN
+reset => current_state~3.DATAIN
+entrance_sensor => Selector2.IN3
+entrance_sensor => Selector1.IN5
+entrance_sensor => Selector5.IN4
+entrance_sensor => Selector17.IN3
+entrance_sensor => Selector19.IN1
+password_in[0] => Equal0.IN15
+password_in[1] => Equal0.IN14
+password_in[2] => Equal0.IN13
+password_in[3] => Equal0.IN12
+password_in[4] => Equal0.IN11
+password_in[5] => Equal0.IN10
+password_in[6] => Equal0.IN9
+password_in[7] => Equal0.IN8
+IDcard => Selector9.IN2
+IDcard => Selector7.IN1
+entrance_LED <= entrance_LED_temp.DB_MAX_OUTPUT_PORT_TYPE
+password_LED <= password_LED_temp.DB_MAX_OUTPUT_PORT_TYPE
+IDcard_LED <= IDcard_LED_temp.DB_MAX_OUTPUT_PORT_TYPE
+gate_LED <= gate_LED_temp.DB_MAX_OUTPUT_PORT_TYPE
+alarm <= alarm_temp.DB_MAX_OUTPUT_PORT_TYPE
+count_out[0] <= count[0].DB_MAX_OUTPUT_PORT_TYPE
+count_out[1] <= count[1].DB_MAX_OUTPUT_PORT_TYPE
+
+
